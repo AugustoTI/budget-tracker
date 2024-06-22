@@ -2,6 +2,7 @@ import { UserButton } from '@clerk/nextjs'
 
 import { Logo } from '~/components/Logo'
 
+import { MobileNavbar } from '../MobileNavbar'
 import { NavbarItem } from '../NavbarItem'
 import { ThemeSwitcherButton } from '../ThemeSwitcherButton'
 
@@ -15,6 +16,7 @@ export function Navbar() {
   return (
     <>
       <DesktopNavbar />
+      <MobileNavbar />
     </>
   )
 }

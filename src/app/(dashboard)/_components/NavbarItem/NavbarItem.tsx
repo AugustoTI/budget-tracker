@@ -9,9 +9,10 @@ import { buttonVariants } from '~/components/ui/button'
 interface NavbarItemProps {
   link: string
   label: string
+  onClick?(): void
 }
 
-export function NavbarItem({ label, link }: NavbarItemProps) {
+export function NavbarItem({ label, link, onClick }: NavbarItemProps) {
   const pathname = usePathname()
   const isActive = pathname === link
 
@@ -19,6 +20,7 @@ export function NavbarItem({ label, link }: NavbarItemProps) {
     <div className="relative flex items-center">
       <Link
         href={link}
+        onClick={onClick}
         className={cn(
           buttonVariants({ variant: 'ghost' }),
           'w-full justify-start text-lg text-muted-foreground hover:text-foreground',
