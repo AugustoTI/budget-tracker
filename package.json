@@ -13,18 +13,24 @@
     "test:coverage": "jest --coverage",
     "postinstall": "lefthook install",
     "clean": "rimraf .next && rimraf node_modules",
-    "clean:next": "rimraf .next"
+    "clean:next": "rimraf .next",
+    "ui:add": "pnpm dlx shadcn-ui@latest add"
   },
   "dependencies": {
     "@clerk/nextjs": "^5.1.6",
+    "@radix-ui/react-dropdown-menu": "^2.1.1",
+    "@radix-ui/react-slot": "^1.1.0",
     "@t3-oss/env-nextjs": "^0.10.1",
+    "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "next": "14.2.4",
+    "next-themes": "^0.3.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-icons": "^5.2.1",
     "sharp": "^0.33.3",
     "tailwind-merge": "^2.3.0",
+    "tailwindcss-animate": "^1.0.7",
     "zod": "^3.23.7"
   },
   "lint-staged": {
