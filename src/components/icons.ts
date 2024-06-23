@@ -5,6 +5,7 @@ import {
   LuMenu,
   LuMoon,
   LuPiggyBank,
+  LuSearch,
   LuSun,
   LuX,
 } from 'react-icons/lu'
@@ -18,4 +19,5 @@ export const Icons = {
   chevronRight: LuChevronRight,
   X: LuX,
   menu: LuMenu,
+  search: LuSearch,
 }
