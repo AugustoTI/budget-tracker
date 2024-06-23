@@ -14,10 +14,14 @@
     "postinstall": "lefthook install",
     "clean": "rimraf .next && rimraf node_modules",
     "clean:next": "rimraf .next",
-    "ui:add": "pnpm dlx shadcn-ui@latest add"
+    "ui:add": "pnpm dlx shadcn-ui@latest add",
+    "db:generate": "prisma generate",
+    "db:pull": "prisma db pull",
+    "db:migrate-dev": "prisma migrate dev"
   },
   "dependencies": {
     "@clerk/nextjs": "^5.1.6",
+    "@prisma/client": "^5.15.1",
     "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-dropdown-menu": "^2.1.1",
     "@radix-ui/react-slot": "^1.1.0",
@@ -72,6 +76,7 @@
     "postcss": "^8.4.38",
     "prettier": "^3.3.2",
     "prettier-plugin-tailwindcss": "^0.6.5",
+    "prisma": "^5.15.1",
     "rimraf": "^5.0.7",
     "serve": "^14.2.3",
     "tailwindcss": "^3.4.4",

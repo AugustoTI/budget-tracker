@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model UserSettings {
+  userId   String @id
+  currency String
+}
+
+model Categories {
+  name      String
+  userId    String
+  icon      String
+  type      String   @default("income")
+  createdAt DateTime @default(now())
+
+  @@unique([name, userId, type])
+}
+
+model Transactions {
+  id           String   @id @default(uuid())
+  amount       Float
+  description  String
+  date         DateTime
+  userId       String
+  type         String   @default("income")
+  category     String
+  categoryIcon String
+  createdAt    DateTime @default(now())
+  updateAt     DateTime @default(now()) @updatedAt
+}
+
+model MonthHistory {
+  userId  String
+  day     Int
+  month   Int
+  year    Int
+  income  Float
+  expense Float
+
+  @@id([day, month, year, userId])
+}
+
+model YearHistory {
+  userId  String
+  month   Int
+  year    Int
+  income  Float
+  expense Float
+
+  @@id([month, year, userId])
+}
