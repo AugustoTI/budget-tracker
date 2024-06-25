@@ -5,6 +5,8 @@ import { type ReactNode } from 'react'
 import { type Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
+import { Toaster } from '~/components/ui/sonner'
+import { ReactQueryProvider } from '~/components/providers/QueryClientProvider'
 import { ThemeProvider } from '~/components/providers/ThemeProvider'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -20,14 +22,17 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <ClerkProvider>
       <html lang="pt-BR" className="antialiased" suppressHydrationWarning>
         <body className={inter.className}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
+          <ReactQueryProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <Toaster richColors position="bottom-right" />
+              {children}
+            </ThemeProvider>
+          </ReactQueryProvider>
         </body>
       </html>
     </ClerkProvider>

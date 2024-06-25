@@ -46,7 +46,9 @@ export default async function WizardPage() {
       <Separator />
 
       <Button className="w-full" asChild>
-        <Link href="/">Terminei! Me leve ao painel</Link>
+        <Link href="/" className="uppercase tracking-wider">
+          Concluído
+        </Link>
       </Button>
 
       <div className="mt-8">
