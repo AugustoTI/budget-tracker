@@ -23,12 +23,12 @@ export default async function HomePage() {
         <div className="container flex flex-wrap items-center justify-between gap-6 py-8">
           <p className="text-3xl font-bold">É bom te ver {user.firstName}! 👋</p>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 xs:w-full xs:flex-col">
             <CreateTransactionDialog
               trigger={
                 <Button
                   variant="outline"
-                  className="border-emerald-500 bg-emerald-900 text-white hover:bg-emerald-700 hover:text-white"
+                  className="border-emerald-500 bg-emerald-900 text-white hover:bg-emerald-700 hover:text-white xs:w-full"
                 >
                   Nova renda 🤑
                 </Button>
@@ -39,7 +39,7 @@ export default async function HomePage() {
               trigger={
                 <Button
                   variant="outline"
-                  className="border-rose-500 bg-rose-900 text-white hover:bg-rose-700 hover:text-white"
+                  className="border-rose-500 bg-rose-900 text-white hover:bg-rose-700 hover:text-white xs:w-full"
                 >
                   Nova despesa 😤
                 </Button>

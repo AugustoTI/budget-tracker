@@ -108,7 +108,7 @@ export function CreateCategoryDialog({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            Criando uma categoria de
+            Criar uma categoria de
             <span
               className={cn(
                 'm-1',
@@ -123,7 +123,7 @@ export function CreateCategoryDialog({
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
+          <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
               name="name"
@@ -188,7 +188,7 @@ export function CreateCategoryDialog({
             />
           </form>
         </Form>
-        <DialogFooter>
+        <DialogFooter className="gap-y-2">
           <DialogClose asChild>
             <Button
               type="button"

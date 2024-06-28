@@ -146,16 +146,14 @@ export function CreateTransactionDialog({ trigger, type }: CreateTransactionDial
               )}
             />
 
-            <div className="flex items-center justify-between gap-2">
+            <div className="flex flex-col items-center justify-between gap-2 space-y-4 sm:flex-row sm:space-y-0">
               <FormField
                 control={form.control}
                 name="category"
                 render={() => (
-                  <FormItem className="flex flex-col">
+                  <FormItem className="flex w-full flex-col">
                     <FormLabel>Categoria</FormLabel>
-                    <FormControl>
-                      <CategoryPicker type={type} onChange={handleCategoryChange} />
-                    </FormControl>
+                    <CategoryPicker type={type} onChange={handleCategoryChange} />
                     <FormDescription>
                       Selecione uma categoria para essa transação
                     </FormDescription>
@@ -166,7 +164,7 @@ export function CreateTransactionDialog({ trigger, type }: CreateTransactionDial
                 control={form.control}
                 name="date"
                 render={({ field }) => (
-                  <FormItem className="flex flex-col">
+                  <FormItem className="flex w-full flex-col">
                     <FormLabel>Data da transação</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
@@ -174,7 +172,7 @@ export function CreateTransactionDialog({ trigger, type }: CreateTransactionDial
                           <Button
                             variant="outline"
                             className={cn(
-                              'w-[200px] p-3 text-left font-normal',
+                              'w-full p-3 text-left font-normal sm:w-[200px]',
                               !field.value && 'text-muted-foreground',
                             )}
                           >
@@ -209,7 +207,7 @@ export function CreateTransactionDialog({ trigger, type }: CreateTransactionDial
             </div>
           </form>
         </Form>
-        <DialogFooter>
+        <DialogFooter className="gap-y-2">
           <DialogClose asChild>
             <Button
               type="button"

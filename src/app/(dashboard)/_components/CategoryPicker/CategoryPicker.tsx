@@ -15,6 +15,7 @@ import {
   CommandItem,
   CommandList,
 } from '~/components/ui/command'
+import { FormControl } from '~/components/ui/form'
 import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover'
 import { Icons } from '~/components/icons'
 
@@ -54,15 +55,17 @@ export function CategoryPicker({ type, onChange }: CategoryPickerProps) {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="w-[200px] justify-between"
-        >
-          {selectedCategory ? <CategoryRow category={selectedCategory} /> : 'Selecione'}
-          <Icons.chevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
-        </Button>
+        <FormControl>
+          <Button
+            variant="outline"
+            role="combobox"
+            aria-expanded={open}
+            className="w-full justify-between sm:w-[200px]"
+          >
+            {selectedCategory ? <CategoryRow category={selectedCategory} /> : 'Selecione'}
+            <Icons.chevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
+          </Button>
+        </FormControl>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <Command
