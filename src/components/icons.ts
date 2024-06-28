@@ -1,5 +1,7 @@
 import {
+  LuCalendar,
   LuCheck,
+  LuChevronLeft,
   LuChevronRight,
   LuChevronsUpDown,
   LuCircle,
@@ -21,6 +23,7 @@ export const Icons = {
   check: LuCheck,
   circle: LuCircle,
   chevronRight: LuChevronRight,
+  chevronLeft: LuChevronLeft,
   chevronsUpDown: LuChevronsUpDown,
   X: LuX,
   menu: LuMenu,
@@ -28,4 +31,5 @@ export const Icons = {
   plusSquare: LuPlusSquare,
   circleOff: LuCircleOff,
   loading: LuLoader2,
+  calendar: LuCalendar,
 }

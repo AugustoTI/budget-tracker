@@ -1,18 +1,26 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { format } from 'date-fns'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import React, { ReactNode } from 'react'
 
 import { type TransactionType } from '~/types/transaction'
+import { DateToUTCDate } from '~/lib/helper'
 import { cn } from '~/lib/utils'
 import {
   CreateTransactionSchema,
   type CreateTransactionSchemaType,
 } from '~/lib/validations/transactions'
+import { Button } from '~/components/ui/button'
+import { Calendar } from '~/components/ui/calendar'
 import {
   Dialog,
+  DialogClose,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -24,9 +32,13 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
+import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover'
+import { Icons } from '~/components/icons'
 
+import { createTransaction } from '../../_actions/transactions'
 import { CategoryPicker } from '../CategoryPicker'
 
 interface CreateTransactionDialogProps {
@@ -35,6 +47,8 @@ interface CreateTransactionDialogProps {
 }
 
 export function CreateTransactionDialog({ trigger, type }: CreateTransactionDialogProps) {
+  const [open, setOpen] = React.useState(false)
+
   const form = useForm<CreateTransactionSchemaType>({
     resolver: zodResolver(CreateTransactionSchema),
     defaultValues: { type, date: new Date(), description: '', category: '', amount: 0 },
@@ -47,8 +61,45 @@ export function CreateTransactionDialog({ trigger, type }: CreateTransactionDial
     [form],
   )
 
+  const queryClient = useQueryClient()
+
+  const mutation = useMutation({
+    mutationFn: createTransaction,
+    onSuccess() {
+      toast.success('Transação criada com sucesso! 🎉', {
+        id: 'create-transaction',
+      })
+      form.reset()
+
+      queryClient.invalidateQueries({
+        queryKey: ['overview'],
+      })
+
+      setOpen((prevState) => !prevState)
+    },
+    onError() {
+      toast.error(`Algo deu errado 😢`, {
+        id: 'create-transaction',
+      })
+    },
+  })
+
+  const onSubmit = React.useCallback(
+    (values: CreateTransactionSchemaType) => {
+      toast.loading('Criando transação...', {
+        id: 'create-transaction',
+      })
+
+      mutation.mutate({
+        ...values,
+        date: DateToUTCDate(values.date),
+      })
+    },
+    [mutation],
+  )
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -65,7 +116,7 @@ export function CreateTransactionDialog({ trigger, type }: CreateTransactionDial
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
               name="description"
@@ -100,7 +151,7 @@ export function CreateTransactionDialog({ trigger, type }: CreateTransactionDial
                 control={form.control}
                 name="category"
                 render={() => (
-                  <FormItem>
+                  <FormItem className="flex flex-col">
                     <FormLabel>Categoria</FormLabel>
                     <FormControl>
                       <CategoryPicker type={type} onChange={handleCategoryChange} />
@@ -111,9 +162,70 @@ export function CreateTransactionDialog({ trigger, type }: CreateTransactionDial
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name="date"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Data da transação</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant="outline"
+                            className={cn(
+                              'w-[200px] p-3 text-left font-normal',
+                              !field.value && 'text-muted-foreground',
+                            )}
+                          >
+                            {field.value ? (
+                              format(field.value, 'PPP')
+                            ) : (
+                              <span>Escolha uma data</span>
+                            )}
+                            <Icons.calendar className="ml-auto size-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0">
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={(value) => {
+                            if (!value) return
+                            field.onChange(value)
+                          }}
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <FormDescription>
+                      Selecione uma data para essa transação
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
           </form>
         </Form>
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={() => {
+                form.reset()
+              }}
+            >
+              Cancelar
+            </Button>
+          </DialogClose>
+          <Button onClick={form.handleSubmit(onSubmit)} disabled={mutation.isPending}>
+            {!mutation.isPending && 'Criar'}
+            {mutation.isPending && <Icons.loading className="animate-spin" />}
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   )
