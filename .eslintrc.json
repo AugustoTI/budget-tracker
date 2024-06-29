@@ -33,5 +33,24 @@
   "rules": {
     "react/prop-types": "off",
     "@typescript-eslint/ban-types": "off"
-  }
+  },
+  "ignorePatterns": [
+    "node_modules/",
+    "coverage/",
+    ".public/",
+    ".vscode//",
+    ".swc/",
+    ".next/",
+    "out/",
+    "build/",
+    ".DS_Store",
+    "*.pem",
+    ".vercel",
+    ".DS_Store",
+    "*.tsbuildinfo",
+    "next-env.d.ts",
+    "pnpm-lock.yaml",
+    ".storybook/",
+    "*.js"
+  ]
 }
