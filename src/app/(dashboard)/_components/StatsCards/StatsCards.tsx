@@ -9,7 +9,7 @@ import { DateToUTCDate, GetFormatterForCurrency } from '~/lib/helper'
 import { Card } from '~/components/ui/card'
 import { Icons } from '~/components/icons'
 import { SkeletonWrapper } from '~/components/SkeletonWrapper'
-import { GetBalanceStatsResponse } from '~/app/api/stats/balance/route'
+import { GetBalanceStatsResponseType } from '~/app/api/stats/balance/route'
 
 interface StatsCardsProps {
   userSettings: UserSettings
@@ -18,7 +18,7 @@ interface StatsCardsProps {
 }
 
 export function StatsCards({ userSettings, from, to }: StatsCardsProps) {
-  const statsQuery = useQuery<GetBalanceStatsResponse>({
+  const statsQuery = useQuery<GetBalanceStatsResponseType>({
     queryKey: ['overview', 'stats', from, to],
     async queryFn() {
       const response = await fetch(

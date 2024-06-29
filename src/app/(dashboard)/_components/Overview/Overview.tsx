@@ -1,10 +1,12 @@
 'use client'
 
 import { type UserSettings } from '@prisma/client'
-import { startOfMonth } from 'date-fns'
+import { differenceInDays, startOfMonth } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
+import { toast } from 'sonner'
 import React from 'react'
 
+import { MAX_DATE_RANGE_DAYS } from '~/lib/constants'
 import { useMediaQuery } from '~/hooks/use-media-query'
 import { DatePickerWithRange } from '~/components/ui/date-ranger-picker'
 
@@ -37,7 +39,16 @@ export function Overview({ userSettings }: { userSettings: UserSettings }) {
 
             if (!range.from) return
 
-            setDataRange({ from: range.from, to: range.to || new Date() })
+            const rangeFinal = range.to || range.from
+
+            if (differenceInDays(rangeFinal, range.from) > MAX_DATE_RANGE_DAYS) {
+              toast.error(
+                `O intervalo de tempo é muito alto. O limite permitido é de no máximo ${MAX_DATE_RANGE_DAYS} dias!`,
+              )
+              return
+            }
+
+            setDataRange({ from: range.from, to: rangeFinal })
           }}
         />
       </div>

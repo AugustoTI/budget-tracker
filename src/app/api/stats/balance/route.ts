@@ -4,11 +4,11 @@ import { redirect } from 'next/navigation'
 import prisma from '~/lib/prisma'
 import { OverviewQuerySchema } from '~/lib/validations/overview'
 
-export async function GET(req: Request) {
+export async function GET(request: Request) {
   const user = await currentUser()
   if (!user) return redirect('/sign-in')
 
-  const { searchParams } = new URL(req.url)
+  const { searchParams } = new URL(request.url)
   const from = searchParams.get('from')
   const to = searchParams.get('to')
 
@@ -24,16 +24,16 @@ export async function GET(req: Request) {
   return Response.json(stats)
 }
 
-export type GetBalanceStatsResponse = Awaited<ReturnType<typeof getBalanceStats>>
+export type GetBalanceStatsResponseType = Awaited<ReturnType<typeof getBalanceStats>>
 
-async function getBalanceStats(userId: string, dateFrom: Date, dateTo: Date) {
+async function getBalanceStats(userId: string, from: Date, to: Date) {
   const totals = await prisma.transactions.groupBy({
     by: ['type'],
     where: {
       userId,
       date: {
-        gte: dateFrom,
-        lte: dateTo,
+        gte: from,
+        lte: to,
       },
     },
     _sum: {
@@ -42,7 +42,7 @@ async function getBalanceStats(userId: string, dateFrom: Date, dateTo: Date) {
   })
 
   return {
-    expense: totals.find((total) => total.type === 'expense')?._sum.amount || 0,
-    income: totals.find((total) => total.type === 'expense')?._sum.amount || 0,
+    expense: totals.find((t) => t.type === 'expense')?._sum.amount || 0,
+    income: totals.find((t) => t.type === 'income')?._sum.amount || 0,
   }
 }

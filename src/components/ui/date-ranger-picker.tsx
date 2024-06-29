@@ -38,7 +38,7 @@ export function DatePickerWithRange({
             id="date"
             variant={'outline'}
             className={cn(
-              'w-[300px] justify-start text-left font-normal',
+              'w-full max-w-[300px] justify-start text-left font-normal',
               !date && 'text-muted-foreground',
             )}
           >
@@ -62,6 +62,7 @@ export function DatePickerWithRange({
             locale={localeCalendar}
             mode="range"
             defaultMonth={date?.from}
+            toDate={new Date()}
             selected={date}
             onSelect={onUpdate}
             numberOfMonths={numberOfMonths}
