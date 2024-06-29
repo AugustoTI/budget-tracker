@@ -1,9 +1,11 @@
 import {
   LuCalendar,
   LuCheck,
+  LuChevronDown,
   LuChevronLeft,
   LuChevronRight,
   LuChevronsUpDown,
+  LuChevronUp,
   LuCircle,
   LuCircleOff,
   LuLoader2,
@@ -13,6 +15,9 @@ import {
   LuPlusSquare,
   LuSearch,
   LuSun,
+  LuTrendingDown,
+  LuTrendingUp,
+  LuWallet,
   LuX,
 } from 'react-icons/lu'
 
@@ -24,6 +29,8 @@ export const Icons = {
   circle: LuCircle,
   chevronRight: LuChevronRight,
   chevronLeft: LuChevronLeft,
+  chevronUp: LuChevronUp,
+  chevronDown: LuChevronDown,
   chevronsUpDown: LuChevronsUpDown,
   X: LuX,
   menu: LuMenu,
@@ -32,4 +39,7 @@ export const Icons = {
   circleOff: LuCircleOff,
   loading: LuLoader2,
   calendar: LuCalendar,
+  trendingDown: LuTrendingDown,
+  trendingUp: LuTrendingUp,
+  wallet: LuWallet,
 }

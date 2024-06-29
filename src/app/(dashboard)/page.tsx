@@ -5,6 +5,7 @@ import prisma from '~/lib/prisma'
 import { Button } from '~/components/ui/button'
 
 import { CreateTransactionDialog } from './_components/CreateTransactionDialog'
+import { Overview } from './_components/Overview'
 
 export default async function HomePage() {
   const user = await currentUser()
@@ -19,6 +20,7 @@ export default async function HomePage() {
 
   return (
     <div className="h-full bg-background">
+      {/* Create Transactions */}
       <div className="border-b bg-card">
         <div className="container flex flex-wrap items-center justify-between gap-6 py-8">
           <p className="text-3xl font-bold">É bom te ver {user.firstName}! 👋</p>
@@ -49,6 +51,8 @@ export default async function HomePage() {
           </div>
         </div>
       </div>
+      {/* Overview */}
+      <Overview userSettings={userSettings} />
     </div>
   )
 }
