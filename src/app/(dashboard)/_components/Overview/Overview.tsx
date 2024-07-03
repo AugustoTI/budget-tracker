@@ -10,6 +10,7 @@ import { MAX_DATE_RANGE_DAYS } from '~/lib/constants'
 import { useMediaQuery } from '~/hooks/use-media-query'
 import { DatePickerWithRange } from '~/components/ui/date-ranger-picker'
 
+import { CategoriesStats } from '../CategoriesStats'
 import { StatsCards } from '../StatsCards'
 
 interface DateRange {
@@ -52,8 +53,13 @@ export function Overview({ userSettings }: { userSettings: UserSettings }) {
           }}
         />
       </div>
-      <div className="container">
+      <div className="container flex w-full flex-col gap-2">
         <StatsCards userSettings={userSettings} from={dataRange.from} to={dataRange.to} />
+        <CategoriesStats
+          userSettings={userSettings}
+          from={dataRange.from}
+          to={dataRange.to}
+        />
       </div>
     </>
   )
